@@ -15,6 +15,8 @@
 </head>
 <body>
 
+<input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
+
 	<div class="main">
 
 		<!-- Sign up form -->
@@ -29,7 +31,12 @@
 							<div class="form-group">
 								<label for="name"><i
 									class="zmdi zmdi-account material-icons-name"></i></label> <input
-									type="text" name="name" id="name" placeholder="Your Name" />
+									type="text" name="firstName" id="firstName" placeholder="Your First Name" />
+							</div>
+							<div class="form-group">
+								<label for="name"><i
+									class="zmdi zmdi-account material-icons-name"></i></label> <input
+									type="text" name="lastName" id="lastName" placeholder="Your Last Name" />
 							</div>
 							<div class="form-group">
 								<label for="email"><i class="zmdi zmdi-email"></i></label> <input
@@ -45,8 +52,34 @@
 									placeholder="Repeat your password" />
 							</div>
 							<div class="form-group">
-								<label for="contact"><i class="zmdi zmdi-lock-outline"></i></label>
-								<input type="text" name="contact" id="contact"
+								<label for="address"><i class="zmdi zmdi-city"></i></label>
+								<input type="text" name="address" id="address"
+									placeholder="Address" />
+							</div>
+							<div class="form-group">
+								<label for="city"><i class="zmdi zmdi-city"></i></label>
+								<input type="text" name="city" id="city"
+									placeholder="City" />
+							</div>
+							
+							<div class="form-group">
+								<label for="zip"><i class="zmdi zmdi-code"></i></label>
+								<input type="text" name="zip" id="zip"
+									placeholder="Zip code" />
+							</div>
+							<div class="form-group">
+								<label for="state"><i class="zmdi zmdi-city"></i></label>
+								<input type="text" name="state" id="state"
+									placeholder="State" />
+							</div>
+							<div class="form-group">
+								<label for="country"><i class="zmdi zmdi-city"></i></label>
+								<input type="text" name="country" id="country"
+									placeholder="Country" />
+							</div>
+							<div class="form-group">
+								<label for="phone"><i class="zmdi zmdi-phone"></i></label>
+								<input type="text" name="phone" id="phone"
 									placeholder="Contact no" />
 							</div>
 							<div class="form-group">
@@ -75,12 +108,27 @@
 
 
 	</div>
-	<!-- JS -->
-	<script src="vendor/jquery/jquery.min.js"></script>
+	
+	<!-- JS <script src="vendor/jquery/jquery.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
 	<script src="js/main.js"></script>
+	
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
-
+	 
+	<script type="text/javascript">
+		
+	 var status=document.getElementById("status").value;
+	 
+	 if(status=="success")
+	 {
+		  swal("Congrats","Account Created Successfully","success");
+	 }
+	 
+	</script>
 
 </body>
-<!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

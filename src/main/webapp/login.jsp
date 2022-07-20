@@ -73,8 +73,9 @@
 
 	</div>
 
-	<!-- JS -->
-	<script src="vendor/jquery/jquery.min.js"></script>
+	<!-- JS <script src="vendor/jquery/jquery.min.js"></script>-->
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	
 	<script src="js/main.js"></script>
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->
