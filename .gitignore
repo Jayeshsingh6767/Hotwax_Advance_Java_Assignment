@@ -1,0 +1,12 @@
+.classpath
+.project
+.settings
+*.class
+*.log
+/src/main/webapp/assets
+/src/main/webapp/css
+/src/main/webapp/fonts
+/src/main/webapp/images
+/src/main/webapp/js
+/src/main/webapp/scss
+/build
