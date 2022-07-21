@@ -23,55 +23,64 @@
 			<div class="container">
 				<div class="signup-content">
 					<div class="signup-form">
-						<h2 class="form-title">User Info</h2>
+						<h2 class="form-title">Edit User</h2>
 					
+						<form method="post" action="edit" class="register-form"
+							id="register-form">
+							<input type="hidden" name="partyId" id="partyId" value="<%=request.getAttribute("partyId") %>" />
+							
 							<div class="form-group"> &nbsp; &nbsp; &nbsp; <strong >First Name</strong>
 								<label for="name"><i
 								    class="zmdi zmdi-account material-icons-name"
 									></i></label> <input
-									type="text" name="firstName" id="firstName" value="<%=request.getAttribute("firstName") %>" readonly />
+									type="text" name="firstName" id="firstName" value="<%=request.getAttribute("firstName") %>" />
 							</div>
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>Last Name</strong>
 								<label for="name"><i
 									class="zmdi zmdi-account material-icons-name"></i></label> <input
-									type="text" name="lastName" id="lastName" value="<%=request.getAttribute("lastName") %>" readonly/>
+									type="text" name="lastName" id="lastName" value="<%=request.getAttribute("lastName") %>" />
 							</div>
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>Email</strong>
 								<label for="email"><i class="zmdi zmdi-email"></i></label> <input
-									type="email" name="email" id="email" value="<%=request.getAttribute("email") %>"readonly/>
+									type="email" name="email" id="email" value="<%=request.getAttribute("email") %>" readonly/>
 							</div>
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>Address</strong>
 								<label for="address"><i class="zmdi zmdi-city"></i></label>
 								<input type="text" name="address" id="address"
-									value="<%=request.getAttribute("address") %>"readonly/>
+									value="<%=request.getAttribute("address") %>"/>
 							</div>
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>City</strong>
 								<label for="city"><i class="zmdi zmdi-city"></i></label>
 								<input type="text" name="city" id="city"
-									value="<%=request.getAttribute("city") %>" readonly/>
+									value="<%=request.getAttribute("city") %>" />
 							</div>
 							
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>Zip Code</strong>
 								<label for="zip"><i class="zmdi zmdi-code"></i></label>
 								<input type="text" name="zip" id="zip"
-									value="<%=request.getAttribute("zip") %>" readonly/>
+									value="<%=request.getAttribute("zip") %>" />
 							</div>
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>State</strong>
 								<label for="state"><i class="zmdi zmdi-city"></i></label>
 								<input type="text" name="state" id="state"
-									value="<%=request.getAttribute("state") %> " readonly/>
+									value="<%=request.getAttribute("state") %> " />
 							</div>
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>Country</strong>
 								<label for="country"><i class="zmdi zmdi-city"></i></label>
 								<input type="text" name="country" id="country"
-									value="<%=request.getAttribute("country") %>"readonly />
+									value="<%=request.getAttribute("country") %>"/>
 							</div>
 							<div class="form-group">&nbsp; &nbsp; &nbsp; <strong>Phone</strong>
 								<label for="phone"><i class="zmdi zmdi-phone"></i></label>
 								<input type="text" name="phone" id="phone"
-									value="<%=request.getAttribute("phone") %>" readonly/>
+									value="<%=request.getAttribute("phone") %>" />
 							</div>
 						
+							<div class="form-group form-button">
+								<input type="submit" name="signup" id="signup"
+									class="form-submit" value="Edit" />
+							</div>
+							</form>
 					
 					</div>
 					<div class="signup-image">

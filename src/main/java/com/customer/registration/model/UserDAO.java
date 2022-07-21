@@ -2,6 +2,9 @@ package com.customer.registration.model;
 
 
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
 
@@ -159,5 +162,120 @@ public class UserDAO {
 			
 		}
 	}
+	
+	public UserDTO getByPartyId(int partyId)throws DAOException
+	{
+		try
+		{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotwax?useSSL=false","root","123456");
+		PreparedStatement preparedStatement=con.prepareStatement("select * from party where partyid=?");
+		preparedStatement.setInt(1,partyId);
+		ResultSet resultSet=preparedStatement.executeQuery();
+		if(resultSet.next()==false)
+		{
+			resultSet.close();
+			preparedStatement.close();
+			con.close();
+			return null;
+		}
+		
+		UserDTO user=new UserDTO();
+		user.setPartyid(partyId);
+		user.setFirstName(resultSet.getString("firstName").trim());
+		user.setLastName(resultSet.getString("lastName").trim());
+		user.setAddress(resultSet.getString("address").trim());
+		user.setCity(resultSet.getString("city").trim());
+		user.setZip(resultSet.getInt("zip"));
+		user.setState(resultSet.getString("state").trim());
+		user.setCountry(resultSet.getString("country").trim());
+		user.setPhone(resultSet.getString("phone").trim());
+		
+		preparedStatement.close();
+		resultSet.close();
+		preparedStatement=con.prepareStatement("select userLoginId from userLogin where partyid=?");
+		preparedStatement.setInt(1,partyId);
+		resultSet=preparedStatement.executeQuery();
+		if(resultSet.next()==false)
+		{
+			resultSet.close();
+			preparedStatement.close();
+			con.close();
+			throw new DAOException("Internal Server Error");
+		}
+		user.setEmail(resultSet.getString("userLoginId").trim());
+		resultSet.close();
+		preparedStatement.close();
+		con.close();
+		return user;
+		}catch(Exception exception)
+		{
+			throw new DAOException(exception.getMessage());
+			
+		}
+	}
+	
+	public Set<UserDTO> getAllUsers()
+	{
+			Set<UserDTO> set= new HashSet<UserDTO>();
+			try
+			{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotwax?useSSL=false","root","123456");
+			Statement statement=con.createStatement();
+			ResultSet resultSet=statement.executeQuery("select * from Party");
+			UserDTO user;
+			
+			while(resultSet.next())
+			{
+			user=new UserDTO();
+			user.setPartyid(resultSet.getInt("partyid"));
+			user.setFirstName(resultSet.getString("firstName").trim());
+			user.setLastName(resultSet.getString("lastName").trim());
+			user.setAddress(resultSet.getString("address").trim());
+			user.setCity(resultSet.getString("city").trim());
+			user.setZip(resultSet.getInt("zip"));
+			user.setState(resultSet.getString("state").trim());
+			user.setCountry(resultSet.getString("country").trim());
+			user.setPhone(resultSet.getString("phone").trim());
+			set.add(user);
+			}
+			statement.close();
+			resultSet.close();
+			con.close();
+			return set;
+			}catch(Exception exception)
+			{
+				return set;
+			}
+			
+			
+		}
+		
+		public void deleteUser(int partyId)
+		{
+			try {
+				
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotwax?useSSL=false","root","123456");
+				PreparedStatement preparedStatement=con.prepareStatement("delete from userLogin where partyid=?");
+				preparedStatement.setInt(1, partyId);
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				preparedStatement=con.prepareStatement("delete from party where partyid=?");
+				preparedStatement.setInt(1, partyId);
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				
+				con.close();
+				
+			}catch(Exception e)
+			{
+				
+				
+			}
+			
+		}
+	
 	
 }

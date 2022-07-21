@@ -2,6 +2,9 @@
 if(session.getAttribute("Name")==null)
 {
 response.sendRedirect("login.jsp");	
+}else if(session.getAttribute("Name").equals("Jayesh"))
+{
+	response.sendRedirect("usersInfo.jsp");		
 }
 %>
 <!DOCTYPE html>
