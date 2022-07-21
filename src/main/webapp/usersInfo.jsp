@@ -274,8 +274,24 @@ $(document).ready(function(){
 
 	 
 	<script type="text/javascript">
-	
-			swal("Welcome","Hello Admin","success");
+	<%
+	String status= (String)request.getAttribute("status");
+	if(status!=null && status.equals("success"))
+	{
+		out.print("swal('Welcome','Hello Admin','success');");
+		out.flush();
+	}else if(status!=null && status.equals("edit"))
+	{
+		out.print("swal('Edited','user edited successfully','success');");
+		out.flush();	
+	}
+	else if(status!=null && status.equals("delete"))
+	{
+		out.print("swal('Deleted','user deleted successfully','error');");
+		out.flush();	
+	}
+	%>
+			
 	
 	</script>
 

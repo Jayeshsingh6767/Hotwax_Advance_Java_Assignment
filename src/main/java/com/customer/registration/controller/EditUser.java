@@ -52,6 +52,7 @@ public class EditUser extends HttpServlet {
 			
 		UserDAO userDAO = new UserDAO();
 		userDAO.updateUser(user);
+		request.setAttribute("status", "edit");
 		RequestDispatcher dispatcher=request.getRequestDispatcher("usersInfo.jsp");
 		dispatcher.forward(request, response);
 		

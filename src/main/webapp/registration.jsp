@@ -27,7 +27,7 @@
 						<h2 class="form-title">Sign up</h2>
 					
 						<form method="post" action="registration" class="register-form"
-							id="register-form">
+							id="register-form" onsubmit='return validate(this)'>
 							<div class="form-group">
 								<label for="name"><i
 									class="zmdi zmdi-account material-icons-name"></i></label> <input
@@ -120,7 +120,82 @@
 
 	 
 	<script type="text/javascript">
-		
+		function validate(frm)
+		{
+			var name=frm.firstName.value.trim();
+			if(name.length==0)
+			{
+				frm.firstName.focus();
+				return false;
+			}
+			var lastName=frm.lastName.value.trim();
+			if(lastName.length==0)
+			{
+				frm.lastName.focus();
+				return false;
+			}
+			var name=frm.firstName.value.trim();
+			if(name.length==0)
+			{
+				frm.firstName.focus();
+				return false;
+			}
+			var email=frm.email.value.trim();
+			if(email.length==0)
+			{
+				frm.email.focus();
+				return false;
+			}
+			var password=frm.pass.value.trim();
+			if(password.length==0)
+			{
+				frm.pass.focus();
+				return false;
+			}
+			var re_pass=frm.re_pass.value.trim();
+			if(re_pass.length==0)
+			{
+				frm.re_pass.focus();
+				return false;
+			}
+			var address=frm.address.value.trim();
+			if(address.length==0)
+			{
+				frm.address.focus();
+				return false;
+			}
+			var city=frm.city.value.trim();
+			if(city.length==0)
+			{
+				frm.city.focus();
+				return false;
+			}
+			var zip=frm.zip.value.trim();
+			if(zip.length==0)
+			{
+				frm.zip.focus();
+				return false;
+			}		
+			var state=frm.state.value.trim();
+			if(state.length==0)
+			{
+				frm.state.focus();
+				return false;
+			}
+			var country=frm.country.value.trim();
+			if(country.length==0)
+			{
+				frm.country.focus();
+				return false;
+			}
+			var phone=frm.phone.value.trim();
+			if(phone.length==0)
+			{
+				frm.phone.focus();
+				return false;
+			}
+			return true;
+		}
 	 var status=document.getElementById("status").value;
 	 
 	 if(status=="success")

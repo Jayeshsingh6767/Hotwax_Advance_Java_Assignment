@@ -27,6 +27,7 @@ public class DeleteUser extends HttpServlet {
 		int partyId=Integer.parseInt(request.getParameter("id"));
 		UserDAO userDAO = new UserDAO();
 		userDAO.deleteUser(partyId);
+		request.setAttribute("status", "delete");
 		RequestDispatcher dispatcher=request.getRequestDispatcher("usersInfo.jsp");
 		dispatcher.forward(request, response);
 	
