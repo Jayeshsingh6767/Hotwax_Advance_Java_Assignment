@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
 
 	<div class="main">
 
@@ -30,8 +31,17 @@
 					</div>
 
 					<div class="signin-form">
+					<form method="post" action="search.jsp" class="register-form"
+							id="login-form">
+							
+							<div class="form-group form-button">
+								<input type="submit" name="search" id="search"
+									class="form-submit" value="Search User" />
+									<br><br><br>
+							</div>
+						</form>
 						<h2 class="form-title">Sign in</h2>
-						<form method="" action="" class="register-form"
+						<form method="post" action="login" class="register-form"
 							id="login-form">
 							<div class="form-group">
 								<label for="username"><i
@@ -69,7 +79,21 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
+	 
+	<script type="text/javascript">
+		
+	 var status=document.getElementById("status").value;
+	 
+	 if(status=="failed")
+	 {
+		  swal("Sorry","invalid user id and password ","error");
+	 }
+	 
+	</script>
 
 	</div>
 
@@ -77,6 +101,7 @@
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	
 	<script src="js/main.js"></script>
+	
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

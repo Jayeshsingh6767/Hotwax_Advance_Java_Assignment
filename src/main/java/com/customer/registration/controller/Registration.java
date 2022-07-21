@@ -2,6 +2,7 @@ package com.customer.registration.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.PasswordAuthentication;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.net.TLSClientHelloExtractor;
+
+import java.util.*;
+
+import javax.mail.Authenticator;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+
 import com.customer.registration.model.*;
+
 
 /**
  * Servlet implementation class Registration
@@ -55,40 +70,74 @@ public class Registration extends HttpServlet {
 		try {
 			userDao.addUser(user);
 			request.setAttribute("status", "success");
+			//sendMail(email);
 			dispatcher.forward(request, response);
-			//System.out.println("\nsuccess");
+			
+				
+			
 		}catch(DAOException daoExceptio)
 		{
+			//System.out.println("ecdsjsdakgdsaklglkdsa");
 			//PrintWriter out=response.getWriter();
 			//out.println(daoExceptio.getMessage());
-			
+			//throw new ServletException(daoExceptio.getMessage());
 			request.setAttribute("status", "failed");
 			dispatcher.forward(request, response);
+			
 				
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-//		PrintWriter out=response.getWriter();
-//		out.println(firstName);
-//		out.println(lastName);
-//		out.println(email);
-//		out.println(password);
-//		out.println(address);
-//		out.println(city);
-//		out.println(zip);
-//		out.println(state);
-//		out.println(country);
-//		out.println(phone);
-		
-		
+	}
+	
 
+	
+	
+	private static void sendMail(String recipient)throws DAOException
+	{
+		try
+		{
+		Properties properties=new Properties();
+		properties.put("mail.smtp.auth","true");
+		properties.put("mail.smtp.starttls.enable","true");
+		properties.put("mail.smtp.host","smtp.gmail.com");
+		properties.put("mail.smtp.port","587");
+		String myAccountEmail="lavika355@gmail.com";
+	    String emailPassword="Jayshreeram@123";
+		Session session=Session.getDefaultInstance(properties,new Authenticator() {
+			@Override 
+			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+				return new javax.mail.PasswordAuthentication(myAccountEmail,emailPassword);
+					}
+			
+		});
+		MimeMessage message=prepareMessage(session,myAccountEmail,recipient);
+		System.out.println("54565454646");	
+		Transport.send(message);
+		System.out.println("Mail send Successfully");
+		}catch(Exception e)
+		{
+			System.out.println("Exception aaya");
+			System.out.println(e);
+			
+			throw new DAOException(e.getMessage());
+		}
 		
+	}
+	private static MimeMessage prepareMessage(Session session,String myAccountEmail,String recipient)
+	{
+		try {
+		MimeMessage message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(myAccountEmail));
+		//message.addRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
+		message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(recipient));
+		message.setSubject("Regarding your registration");
+		message.setText("Congratulations your registration Succesful");
+		return message;
+		}catch(Exception exception)
+		{
+			System.out.println("prepare Message");
+		}
+		return null;
 	}
 
 }
