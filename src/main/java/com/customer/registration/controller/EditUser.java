@@ -1,12 +1,15 @@
 package com.customer.registration.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.customer.registration.model.UserDAO;
 import com.customer.registration.model.UserDTO;
 
 /**
@@ -28,7 +31,6 @@ public class EditUser extends HttpServlet {
 		int partyId=Integer.parseInt(request.getParameter("partyId"));
 		String firstName=request.getParameter("firstName");
 		String lastName=request.getParameter("lastName");
-		String password=request.getParameter("pass");
 		String address=request.getParameter("address");
 		String city=request.getParameter("city");
 		int zip=Integer.parseInt(request.getParameter("zip"));
@@ -38,9 +40,9 @@ public class EditUser extends HttpServlet {
 		
 		// create DTO and fill data
 		UserDTO user= new UserDTO();
+		user.setPartyid(partyId);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setPassword(password);
 		user.setAddress(address);
 		user.setCity(city);
 		user.setZip(zip);
@@ -48,6 +50,11 @@ public class EditUser extends HttpServlet {
 		user.setCountry(country);
 		user.setPhone(phone);
 			
+		UserDAO userDAO = new UserDAO();
+		userDAO.updateUser(user);
+		RequestDispatcher dispatcher=request.getRequestDispatcher("usersInfo.jsp");
+		dispatcher.forward(request, response);
+		
 		
 	}
 

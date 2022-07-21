@@ -214,7 +214,43 @@ public class UserDAO {
 			
 		}
 	}
-	
+	public void updateUser(UserDTO user)
+	{
+		int partyId=user.getPartyid();
+		String firstName=user.getFirstName();
+		String lastName=user.getLastName();
+		String address=user.getAddress();
+		String city=user.getCity();
+		int zip=user.getZip();
+		String state=user.getState();
+		String country=user.getCountry();
+		String phone=user.getPhone();
+		
+		try
+		{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotwax?useSSL=false","root","123456");
+		PreparedStatement preparedStatement=con.prepareStatement("update Party set firstName=?,lastName=?,address=?,city=?,zip=?,state=?,country=?,phone=? where partyid=?");
+		preparedStatement.setString(1,firstName);
+		preparedStatement.setString(2,lastName);
+		preparedStatement.setString(3,address);
+		preparedStatement.setString(4,city);
+		preparedStatement.setInt(5,zip);
+		preparedStatement.setString(6,state);
+		preparedStatement.setString(7,country);
+		preparedStatement.setString(8,phone);
+		preparedStatement.setInt(9,partyId);
+		preparedStatement.executeUpdate();
+		preparedStatement.close();
+		con.close();
+		}catch(Exception exception)
+		{
+			//throw new DAOException(exception.getMessage());
+			
+		}
+		
+		
+	}
 	public Set<UserDTO> getAllUsers()
 	{
 			Set<UserDTO> set= new HashSet<UserDTO>();

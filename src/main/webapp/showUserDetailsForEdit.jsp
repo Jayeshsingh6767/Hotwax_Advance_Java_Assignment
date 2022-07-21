@@ -87,7 +87,7 @@
 						<figure>
 							<img src="images/signup-image.jpg" alt="sing up image">
 						</figure>
-						<a href="search.jsp" class="signup-image-link">Search Another user</a>
+						<a href="usersInfo.jsp" class="signup-image-link">Cancel</a>
 					</div>
 				</div>
 			</div>
