@@ -18,11 +18,15 @@ import java.util.*;
 import javax.mail.Authenticator;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 
 import com.customer.registration.model.*;
 
@@ -69,8 +73,21 @@ public class Registration extends HttpServlet {
 		RequestDispatcher dispatcher=request.getRequestDispatcher("registration.jsp");
 		try {
 			userDao.addUser(user);
+			try
+			{
+			mail(email,firstName);
+			}catch(AddressException ae)
+			{
+			System.out.println("address exception");
+			System.out.println(ae);
+			
+			}catch(MessagingException me)
+			{
+				System.out.println("Message exception");
+				System.out.println(me);
+					
+			}
 			request.setAttribute("status", "success");
-			//sendMail(email);
 			dispatcher.forward(request, response);
 			
 				
@@ -90,54 +107,33 @@ public class Registration extends HttpServlet {
 	}
 	
 
-	
-	
-	private static void sendMail(String recipient)throws DAOException
+	private static void mail(String userEmail,String userName) throws AddressException, MessagingException
 	{
-		try
-		{
-		Properties properties=new Properties();
-		properties.put("mail.smtp.auth","true");
-		properties.put("mail.smtp.starttls.enable","true");
-		properties.put("mail.smtp.host","smtp.gmail.com");
-		properties.put("mail.smtp.port","587");
-		String myAccountEmail="lavika355@gmail.com";
-	    String emailPassword="Jayshreeram@123";
-		Session session=Session.getDefaultInstance(properties,new Authenticator() {
-			@Override 
-			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-				return new javax.mail.PasswordAuthentication(myAccountEmail,emailPassword);
-					}
-			
-		});
-		MimeMessage message=prepareMessage(session,myAccountEmail,recipient);
-		System.out.println("54565454646");	
-		Transport.send(message);
-		System.out.println("Mail send Successfully");
-		}catch(Exception e)
-		{
-			System.out.println("Exception aaya");
-			System.out.println(e);
-			
-			throw new DAOException(e.getMessage());
-		}
 		
-	}
-	private static MimeMessage prepareMessage(Session session,String myAccountEmail,String recipient)
-	{
-		try {
-		MimeMessage message = new MimeMessage(session);
-		message.setFrom(new InternetAddress(myAccountEmail));
-		//message.addRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
-		message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(recipient));
-		message.setSubject("Regarding your registration");
-		message.setText("Congratulations your registration Succesful");
-		return message;
-		}catch(Exception exception)
-		{
-			System.out.println("prepare Message");
-		}
-		return null;
+		Properties prop = new Properties();
+		 prop.put("mail.smtp.host", "smtp.gmail.com");
+		    prop.put("mail.smtp.port", "587");
+		    prop.put("mail.smtp.auth", "true");
+		    prop.put("mail.smtp.starttls.enable", "true");
+		Session session = Session.getInstance(prop, new Authenticator() {
+		    @Override
+		    protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+		        return new javax.mail.PasswordAuthentication("lavika355@gmail.com", "mqullycbudxlginz");
+		    }
+		});
+		Message message = new MimeMessage(session);
+		message.setFrom(new InternetAddress("lavika355@gmail.com"));
+		message.setRecipients(
+		  Message.RecipientType.TO, InternetAddress.parse(userEmail));
+		message.setSubject("Regarding Registration");
+		String msg = "Congratulations!\n	Hello "+userName+" your registered successfully use your "+userEmail+" for login";
+		MimeBodyPart mimeBodyPart = new MimeBodyPart();
+		mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(mimeBodyPart);
+		message.setContent(multipart);
+		Transport.send(message);
+		
 	}
 
 }
