@@ -55,6 +55,17 @@ public class Registration extends HttpServlet {
 		String country=request.getParameter("country");
 		String phone=request.getParameter("phone");
 		
+		// encrytp password
+		RequestDispatcher dispatcher=request.getRequestDispatcher("registration.jsp");
+		try
+		{
+		password=AES.encrypt(password);
+		}catch(Exception e)
+		{
+			request.setAttribute("status", "failed");
+			dispatcher.forward(request, response);
+			return;
+		}
 		// create DTO and fill data
 		UserDTO user= new UserDTO();
 		user.setFirstName(firstName);
@@ -68,10 +79,17 @@ public class Registration extends HttpServlet {
 		user.setCountry(country);
 		user.setPhone(phone);
 		
+		
 		// create DAO object and add user
 		UserDAO userDao=new UserDAO();
-		RequestDispatcher dispatcher=request.getRequestDispatcher("registration.jsp");
 		try {
+			
+			if(userDao.isEmailExists(email))
+			{	
+				request.setAttribute("status", "emailExists");
+				dispatcher.forward(request, response);		
+				return;
+			}
 			userDao.addUser(user);
 			try
 			{
@@ -92,12 +110,8 @@ public class Registration extends HttpServlet {
 			
 				
 			
-		}catch(DAOException daoExceptio)
+		}catch(DAOException daoException)
 		{
-			//System.out.println("ecdsjsdakgdsaklglkdsa");
-			//PrintWriter out=response.getWriter();
-			//out.println(daoExceptio.getMessage());
-			//throw new ServletException(daoExceptio.getMessage());
 			request.setAttribute("status", "failed");
 			dispatcher.forward(request, response);
 			
@@ -126,7 +140,7 @@ public class Registration extends HttpServlet {
 		message.setRecipients(
 		  Message.RecipientType.TO, InternetAddress.parse(userEmail));
 		message.setSubject("Regarding Registration");
-		String msg = "Congratulations!\n	Hello "+userName+" your registered successfully use your "+userEmail+" for login";
+		String msg = "Congratulations!\n	Hello "+userName+" you registered successfully use your "+userEmail+" for login";
 		MimeBodyPart mimeBodyPart = new MimeBodyPart();
 		mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
 		Multipart multipart = new MimeMultipart();

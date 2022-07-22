@@ -97,7 +97,7 @@
 					</div>
 					<div class="signup-image">
 						<figure>
-							<img src="images/signup-image.jpg" alt="sing up image">
+							<img src="images/registration.gif" id="registationImage" alt="sing up image">
 						</figure>
 						<a href="login.jsp" class="signup-image-link">I am already
 							member</a>
@@ -194,6 +194,9 @@
 				frm.phone.focus();
 				return false;
 			}
+			//var imgs=document.getElementById("regisrationImage").src="images/loading.gif";
+			
+			
 			return true;
 		}
 	 var status=document.getElementById("status").value;
@@ -204,6 +207,9 @@
 	 }else if(status=="failed")
 	 {
 		  swal("Sorry","Account not Created ","error");
+	 }else if(status=="emailExists")
+	 {
+		  swal("Invalid","Email exists","error");
 	 }
 	 
 	</script>

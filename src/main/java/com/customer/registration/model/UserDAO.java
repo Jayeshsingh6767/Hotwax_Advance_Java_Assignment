@@ -312,6 +312,29 @@ public class UserDAO {
 			}
 			
 		}
-	
+	public boolean isEmailExists(String email)throws DAOException
+	{
+		try
+		{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotwax?useSSL=false","root","123456");
+		PreparedStatement preparedStatement=con.prepareStatement("select * from userLogin where userLoginId=?");
+		preparedStatement.setString(1,email);
+		ResultSet resultSet=preparedStatement.executeQuery();
+		if(resultSet.next()==false)
+		{
+			return false;
+		}
+		resultSet.close();
+		preparedStatement.close();
+		con.close();
+		return true;
+		}catch(Exception exception)
+		{
+			throw new DAOException(exception.getMessage());
+			
+		}
+		
+	}
 	
 }

@@ -24,25 +24,18 @@
 				<div class="signin-content">
 					<div class="signin-image">
 						<figure>
-							<img src="images/signin-image.jpg" alt="sing up image">
+							<img src="images/team.gif" alt="sing up image">
 						</figure>
-						<a href="registration.jsp" class="signup-image-link">Create an
-							account</a>
+						<a href="registration.jsp" class="signup-image-link">
+						<img src="images/register.png" alt="create a account"></a>
 					</div>
-
+					
 					<div class="signin-form">
-					<form method="post" action="search.jsp" class="register-form"
-							id="login-form">
-							
-							<div class="form-group form-button">
-								<input type="submit" name="search" id="search"
-									class="form-submit" value="Search User" />
-									<br><br><br>
-							</div>
-						</form>
+					<a href="search.jsp" class="signup-image-link">
+						<img src="images/searchBar.gif" alt="search"></a>		
 						<h2 class="form-title">Sign in</h2>
 						<form method="post" action="login" class="register-form"
-							id="login-form">
+							id="login-form" onsubmit='return validate(this)'>
 							<div class="form-group">
 								<label for="username"><i
 									class="zmdi zmdi-account material-icons-name"></i></label> <input
@@ -86,12 +79,30 @@
 	 
 	<script type="text/javascript">
 		
-	 var status=document.getElementById("status").value;
+	function validate(frm)
+	{
+		var name=frm.username.value.trim();
+		if(name.length==0)
+		{
+			frm.username.focus();
+			return false;
+		}
+		var lastName=frm.password.value.trim();
+		if(lastName.length==0)
+		{
+			frm.password.focus();
+			return false;
+		}
+		
+		return true;
+	}
+	var status=document.getElementById("status").value;
 	 
 	 if(status=="failed")
 	 {
 		  swal("Sorry","invalid user id and password ","error");
 	 }
+	 
 	 
 	</script>
 

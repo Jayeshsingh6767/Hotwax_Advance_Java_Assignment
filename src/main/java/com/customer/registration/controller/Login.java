@@ -38,6 +38,7 @@ public class Login extends HttpServlet {
 		UserDAO userDAO=new UserDAO();
 		try
 		{
+		password=AES.encrypt(password);
 		UserDTO user=userDAO.getByUserIdAndPassword(email, password);
 		if(user==null)
 		{
@@ -52,11 +53,12 @@ public class Login extends HttpServlet {
 		dispatcher=request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 		
-		}catch(DAOException exception)
+		}catch(Exception exception)
 		{
-			System.out.print("/////////////////////");
+			System.out.print(exception);
 			
 		}
+		
 		
 		
 		
